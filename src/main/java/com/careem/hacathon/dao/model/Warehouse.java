@@ -1,9 +1,12 @@
 package com.careem.hacathon.dao.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
-@Table(name="warehouse")
+@Table(name="WAREHOUSE")
 @Entity
+@Data
 public class Warehouse {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

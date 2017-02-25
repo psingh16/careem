@@ -33,6 +33,7 @@ public class QuotationResource {
     public Response getQuotationDetail(Map<String, Object> data) throws Exception {
        String quotationId = UUID.randomUUID().toString();
        //write to kafka queue
+       data.put("quotationId", quotationId);
        String json = new Gson().toJson(data);
        producer.write(quotationId, json);
        return Response.accepted("Your request is accepted. We will get back to you shortly. Please use quotation Id: "+quotationId+"for future reference").build();

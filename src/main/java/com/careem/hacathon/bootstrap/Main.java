@@ -2,8 +2,9 @@ package com.careem.hacathon.bootstrap;
 
 import com.careem.hacathon.biz.kafka.Consumer;
 import com.careem.hacathon.biz.kafka.Producer;
-import com.careem.hacathon.dao.GenericAbstractDAO;
+import com.careem.hacathon.dao.model.Booking;
 import com.careem.hacathon.dao.model.Price;
+import com.careem.hacathon.dao.model.Warehouse;
 import com.careem.hacathon.resource.QuotationResource;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
@@ -29,7 +30,9 @@ public class Main extends Application<AppConfiguration> {
     private static ClassPathXmlApplicationContext context = null;
 
     private final HibernateBundle<AppConfiguration> hibernateBundle = new HibernateBundle<AppConfiguration>(
-            Price.class
+            Price.class,
+            Booking.class,
+            Warehouse.class
     ) {
 
         public DataSourceFactory getDataSourceFactory(AppConfiguration configuration) {
@@ -38,7 +41,7 @@ public class Main extends Application<AppConfiguration> {
     };
 
     public static void main(String[] args) throws Exception {
-        context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        context = new ClassPathXmlApplicationContext("applicationContext.xml", "datastore-mysql.xml");
         new Main().run(args);
     }
 
@@ -67,9 +70,6 @@ public class Main extends Application<AppConfiguration> {
 
 
     public void run(AppConfiguration configuration, Environment environment) {
-        GenericAbstractDAO<Price> priceGenericAbstractDAO =
-                new GenericAbstractDAO<Price>(hibernateBundle.getSessionFactory(), "Price");
-
         environment.jersey().register(new QuotationResource(context.getBean(Producer.class)));
 
     }

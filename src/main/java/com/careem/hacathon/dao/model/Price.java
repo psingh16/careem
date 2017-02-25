@@ -12,6 +12,13 @@ import javax.persistence.*;
 @Entity
 @Table(name = "PRICE")
 @Data
+@NamedQueries({
+        @NamedQuery(
+                name = "Price.findByGoodsTypeAndGoodsCategory",
+                query = "from Price m where m.goodsType = :goodsType and m.category = :goodsCategory"
+        )
+
+})
 public class Price {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
