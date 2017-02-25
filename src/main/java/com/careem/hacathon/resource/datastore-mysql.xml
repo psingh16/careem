@@ -1,0 +1,78 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.careem.hacathon.*" />
+
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+        <property name="locations">
+            <list>
+                <value>classpath:/config.yml</value>
+            </list>
+        </property>
+        <property name="propertiesPersister" ref="persister" />
+    </bean>
+
+    <bean id="persister" class="com.olacabs.ims.workflow.dpe.util.YamlPropertiesPersister" />
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="${db.driverClass}" />
+        <property name="jdbcUrl" value="${db.url}" />
+        <property name="user" value="${db.user}" />
+        <property name="password" value="${db.password}" />
+        <property name="acquireIncrement" value="${db.properties.c3p0.acquireIncrement}" />
+        <property name="initialPoolSize" value="${db.properties.c3p0.initialPoolSize}" />
+        <property name="minPoolSize" value="${db.properties.c3p0.minPoolSize}" />
+        <property name="maxPoolSize" value="${db.properties.c3p0.maxPoolSize}" />
+        <property name="maxIdleTime" value="${db.properties.c3p0.maxIdleTime}" />
+        <property name="maxStatements" value="${db.properties.c3p0.maxStatements}" />
+        <property name="idleConnectionTestPeriod"
+                  value="${db.properties.c3p0.idleConnectionTestPeriod}" />
+        <property name="preferredTestQuery" value="SELECT 1" />
+    </bean>
+
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceXmlLocation" value="classpath:persistence.xml" />
+        <property name="persistenceUnitName" value="ims-dpm" />
+        <property name="dataSource" ref="dataSource" />
+        <property name="jpaPropertyMap">
+            <props>
+                <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
+                <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.EJB3NamingStrategy</prop>
+                <prop key="spring.jpa.hibernate.naming_strategy">org.hibernate.cfg.EJB3NamingStrategy</prop>
+                <!--<prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>-->
+                <prop key="hibernate.current_session_context_class">thread</prop>
+                <prop key="hibernate.dialect">${db.properties.hibernate.dialect}</prop>
+                <prop key="hibernate.connection.release_mode">AFTER_TRANSACTION</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

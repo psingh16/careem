@@ -3,7 +3,7 @@ package com.careem.hacathon.bootstrap;
 import com.careem.hacathon.biz.kafka.Consumer;
 import com.careem.hacathon.biz.kafka.Producer;
 import com.careem.hacathon.dao.GenericAbstractDAO;
-import com.careem.hacathon.dao.Price;
+import com.careem.hacathon.dao.model.Price;
 import com.careem.hacathon.resource.QuotationResource;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
