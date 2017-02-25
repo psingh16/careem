@@ -13,6 +13,7 @@ public class GetQuotationRequestDTO {
     private double weight;
     private String goodsCategory;
     private String deliveryType;
+
     private String emailId;
     private Address fromAddress;
     private Address toAddress;

@@ -2,6 +2,7 @@ package com.careem.hacathon.bootstrap;
 
 import com.careem.hacathon.biz.kafka.Consumer;
 import com.careem.hacathon.biz.kafka.Producer;
+import com.careem.hacathon.dao.GenericAbstractDAO;
 import com.careem.hacathon.dao.model.Booking;
 import com.careem.hacathon.dao.model.Price;
 import com.careem.hacathon.dao.model.Warehouse;
@@ -70,6 +71,8 @@ public class Main extends Application<AppConfiguration> {
 
 
     public void run(AppConfiguration configuration, Environment environment) {
+
+
         environment.jersey().register(new QuotationResource(context.getBean(Producer.class)));
 
     }

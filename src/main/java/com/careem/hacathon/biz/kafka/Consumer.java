@@ -32,8 +32,6 @@ public class Consumer implements Callable<Object> {
 
         Properties props = consumerPropertyBean.getProps();
         this.consumer = new KafkaConsumer<String, String>(props);
-
-        log.info("Started the consumer thread " + consumerPropertyBean.getTopics().toString());
     }
       public Object call() throws Exception {
         consumer.subscribe(consumerPropertyBean.getTopics());
@@ -43,11 +41,14 @@ public class Consumer implements Callable<Object> {
                 ConsumerRecords<String, String> records = consumer.poll(1000);
                 for (ConsumerRecord<String, String> record : records) {
 
+
+
+
                     GetQuotationRequestDTO getQuotationRequestDTO = new Gson().fromJson(record.value(), GetQuotationRequestDTO.class);
                     quotationService.updateBooking(getQuotationRequestDTO);
                 }
             } catch (Exception e) {
-                log.error("Exception in processing records. Error : {}", e.getMessage(), e);
+               // log.error("Exception in processing records. Error : {}", e.getMessage(), e);
             }
         }
     }
