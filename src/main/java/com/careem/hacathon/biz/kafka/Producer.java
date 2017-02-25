@@ -22,7 +22,7 @@ public class Producer {
         producer = new org.apache.kafka.clients.producer.KafkaProducer<String, String>(props);
         this.topic = propertyBean.getTopics().get(0);
 
-        log.info("Started the producer thread " + this.topic);
+       // log.info("Started the producer thread " + this.topic);
     }
 
     /**
@@ -35,9 +35,9 @@ public class Producer {
     public void write(String id, String json) throws Exception {
         try {
             producer.send(new ProducerRecord<String, String>(topic, id, json)).get();
-            log.info("Sent message: (" + id + ", " + json + ")");
+           // log.info("Sent message: (" + id + ", " + json + ")");
         } catch (Exception ex) {
-            log.error("Error in writing onto kafka queue, json : {}. Error : {}", json, ex.getMessage());
+           // log.error("Error in writing onto kafka queue, json : {}. Error : {}", json, ex.getMessage());
             throw ex;        }
 
     }

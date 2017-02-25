@@ -12,6 +12,7 @@ database:
      c3p0.maxIdleTime: 300
      c3p0.maxStatements: 500
      c3p0.idleConnectionTestPeriod: 30
+     
 
 logging:
   appenders:

@@ -33,7 +33,7 @@ public class Consumer implements Callable<Object> {
 
         objectMapper = new ObjectMapper();
 
-        log.info("Started the consumer thread " + consumerPropertyBean.getTopics().toString());
+       // log.info("Started the consumer thread " + consumerPropertyBean.getTopics().toString());
     }
 
     public Object call() throws Exception {
@@ -44,11 +44,11 @@ public class Consumer implements Callable<Object> {
                 ConsumerRecords<String, String> records = consumer.poll(1000);
                 for (ConsumerRecord<String, String> record : records) {
                     GetQuotationRequestDTO getQuotationRequestDTO = new Gson().fromJson(record.value(), GetQuotationRequestDTO.class);
-                    System.out.print("priyanka "+getQuotationRequestDTO.getBusinessId());
+                   // System.out.print("priyanka "+getQuotationRequestDTO.getBusinessId());
 
                     }
             } catch (Exception e) {
-                log.error("Exception in processing records. Error : {}", e.getMessage(), e);
+               // log.error("Exception in processing records. Error : {}", e.getMessage(), e);
             }
         }
     }

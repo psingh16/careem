@@ -19,6 +19,8 @@ public class Booking {
 	private String status;
 	private String bookedBy;
 	private Date bookingDate;
+	private String source;
+	private String destination;
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)  
 	@Column(name = "booking_id", unique = true, nullable = false)
@@ -53,6 +55,18 @@ public class Booking {
 	}
 	public void setBookingDate(Date bookingDate) {
 		this.bookingDate = bookingDate;
+	}
+	public String getSource() {
+		return source;
+	}
+	public void setSource(String source) {
+		this.source = source;
+	}
+	public String getDestination() {
+		return destination;
+	}
+	public void setDestination(String destination) {
+		this.destination = destination;
 	}
 	
 	

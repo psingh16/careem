@@ -69,6 +69,7 @@ public class Main extends Application<AppConfiguration> {
     public void run(AppConfiguration configuration, Environment environment) {
         GenericAbstractDAO<Price> priceGenericAbstractDAO =
                 new GenericAbstractDAO<Price>(hibernateBundle.getSessionFactory(), "Price");
+        
 
         environment.jersey().register(new QuotationResource(context.getBean(Producer.class)));
 
