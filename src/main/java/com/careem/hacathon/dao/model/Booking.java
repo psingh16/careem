@@ -51,4 +51,5 @@ public class Booking {
 
 	@Column(name = "CREATED_AT", nullable = false)
 	private Date createdAt;
+	
 }
