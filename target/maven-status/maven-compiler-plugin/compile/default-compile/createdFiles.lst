@@ -1,7 +1,11 @@
-com/careem/hacathon/bootstrap/Main$1.class
+com/careem/hacathon/biz/kafka/PropertyBean.class
 com/careem/hacathon/dao/GenericAbstractDAO.class
-com/careem/hacathon/resource/QuotationResource.class
 com/careem/hacathon/bootstrap/Main.class
 com/careem/hacathon/dao/Price.class
 com/careem/hacathon/bootstrap/Main$2.class
 com/careem/hacathon/bootstrap/AppConfiguration.class
+com/careem/hacathon/bootstrap/Main$1.class
+com/careem/hacathon/resource/QuotationResource.class
+com/careem/hacathon/biz/kafka/Consumer.class
+com/careem/hacathon/bootstrap/Main$3.class
+com/careem/hacathon/biz/kafka/Producer.class

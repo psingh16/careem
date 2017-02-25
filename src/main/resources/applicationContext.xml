@@ -1,0 +1,67 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+
+       http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.olacabs.ims.bpp.*" />
+
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+        <property name="locations">
+            <list>
+                <value>config.yml</value>
+            </list>
+        </property>
+        <property name="propertiesPersister" ref="persister" />
+    </bean>
+
+    <bean id="persister" class="com.olacabs.spring.util.YamlPropertiesPersister" />
+
+    <bean id="producer" class="com.olacabs.ims.bpp.biz.kafka.Producer">
+        <constructor-arg ref="producerPropertyBean"></constructor-arg>
+    </bean>
+
+    <bean id="producerPropertyBean" class="com.olacabs.ims.bpp.biz.kafka.PropertyBean">
+        <property name="props">
+            <props>
+                <prop key="bootstrap.servers">${kafkaConfig.server}</prop>
+                <prop key="key.serializer">${kafkaConfig.producer.keySerializer}</prop>
+                <prop key="value.serializer">${kafkaConfig.producer.valueSerializer}</prop>
+            </props>
+        </property>
+        <property name="topics">
+            <list>
+                <value>${kafkaConfig.topic}</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="consumer" class="com.olacabs.ims.bpp.biz.kafka.Consumer">
+        <constructor-arg ref="consumerPropertyBean"></constructor-arg>
+        <constructor-arg ref="documentService"></constructor-arg>
+        <constructor-arg ref="driverService"></constructor-arg>
+    </bean>
+
+    <bean id="consumerPropertyBean" class="com.olacabs.ims.bpp.biz.kafka.PropertyBean">
+        <property name="props">
+            <props>
+                <prop key="bootstrap.servers">${kafkaConfig.server}</prop>
+                <prop key="key.deserializer">${kafkaConfig.consumer.keyDeserializer}</prop>
+                <prop key="value.deserializer">${kafkaConfig.consumer.valueDeserializer}</prop>
+                <prop key="group.id">${kafkaConfig.consumer.groupId}</prop>
+            </props>
+        </property>
+        <property name="topics">
+            <list>
+                <value>${kafkaConfig.topic}</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>
