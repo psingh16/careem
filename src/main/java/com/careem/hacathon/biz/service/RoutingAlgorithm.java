@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RoutingAlgorithm {
-
-
     /**@author Raju K Singh
      * return fastest possible route between source and destination
      * @return

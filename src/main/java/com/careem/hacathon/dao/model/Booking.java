@@ -43,10 +43,10 @@ public class Booking {
 
     @Column(name = "CURRENT_STATE", nullable = false)
     private String currentState;
+	@Column(name = "UPDATED_AT", nullable = false)
+	private Date updatedAt;
 
-    @Column(name = "UPDATED_AT", nullable = false)
-    private Date updatedAt;
+	@Column(name = "CREATED_AT", nullable = false)
+	private Date createdAt;
 
-    @Column(name = "CREATED_AT", nullable = false)
-    private Date createdAt;
 }
