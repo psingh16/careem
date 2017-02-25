@@ -5,6 +5,8 @@
     <persistence-unit name="ims-dpm" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.careem.hacathon.dao.model.Booking</class>
+        <class>com.careem.hacathon.dao.model.Price</class>
+        <class>com.careem.hacathon.dao.model.Warehouse</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
     </persistence-unit>
 </persistence>

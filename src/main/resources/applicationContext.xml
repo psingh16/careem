@@ -19,6 +19,9 @@
         </property>
     </bean>
 
+    <bean id="quotationService" class="com.careem.hacathon.biz.service.QuotationService">
+    </bean>
+
     <bean id="producer" class="com.careem.hacathon.biz.kafka.Producer">
         <constructor-arg ref="producerPropertyBean"></constructor-arg>
     </bean>
@@ -40,6 +43,7 @@
 
     <bean id="consumer" class="com.careem.hacathon.biz.kafka.Consumer">
         <constructor-arg ref="consumerPropertyBean"></constructor-arg>
+        <constructor-arg ref="quotationService"></constructor-arg>
     </bean>
 
     <bean id="consumerPropertyBean" class="com.careem.hacathon.biz.kafka.PropertyBean">

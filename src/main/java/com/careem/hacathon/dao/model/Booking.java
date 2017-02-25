@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="Booking")
+@Table(name="BOOKING")
 @Data
 public class Booking {
 	@Id
@@ -22,7 +22,7 @@ public class Booking {
 	private String emailId;
 
 	@Column(name = "BUSINESS_ID", nullable = false)
-	private String businessId;
+	private int businessId;
 
 	@Column(name = "QUOTATION_ID", nullable = false)
 	private int quotationId;
@@ -38,6 +38,12 @@ public class Booking {
 
 	@Column(name = "PRICE", nullable = false)
 	private double price;
+
+	@Column(name = "SOURCE", nullable = false)
+	private String source;
+
+	@Column(name = "DESTINATION", nullable = false)
+	private String destination;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinColumn(name = "BOOKING_ID")
