@@ -22,7 +22,7 @@ public class RoutingAlgorithm {
 		 * A ->B  20min
 		 * A->C->B 18min
 		 * A->C->D->B 21min
-		 * 
+		 * Use  Djikstra Algorithm where time is given between 2 vertices
 		 * above information will be stored in DB
 		 */
 		fetchRoutes(this.source,this.destination);
@@ -43,7 +43,7 @@ public class RoutingAlgorithm {
 				 * A ->B  20km
 				 * A->C->B 18km
 				 * A->C->D->B 21km
-				 * 
+				 * Use  Djikstra Algorithm where distance is given between 2 vertices
 				 * above information will be stored in DB
 				 */
 		fetchRoutes(this.source,this.destination);
