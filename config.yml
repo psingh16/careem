@@ -1,0 +1,46 @@
+database:
+   driverClass: com.mysql.jdbc.Driver
+   user: root
+   password:
+   url: jdbc:mysql://localhost:3306/dpe?autoReconnect=true
+   properties:
+     hibernate.dialect: org.hibernate.dialect.MySQLDialect
+     c3p0.acquireIncrement: 5
+     c3p0.initialPoolSize: 5
+     c3p0.minPoolSize: 10
+     c3p0.maxPoolSize: 50
+     c3p0.maxIdleTime: 300
+     c3p0.maxStatements: 500
+     c3p0.idleConnectionTestPeriod: 30
+
+logging:
+  appenders:
+    -
+      type: console
+    -
+      archivedFileCount: 7
+      archivedLogFilenamePattern: "/tmp/application-%d{yyyy-MM-dd}-%i.log.gz"
+      currentLogFilename: /tmp/application.log
+      logFormat: "%-6level [%d{HH:mm:ss.SSS}] [%t] %logger{5} - %X{code} %msg %n"
+      maxFileSize: 10MB
+      threshold: INFO
+      timeZone: UTC
+      type: file
+  level: INFO
+  loggers:
+    com.example.app: DEBUG
+    org.hibernate.SQL:
+      level: DEBUG
+
+server:
+  adminConnectors:
+    -
+      port: 8081
+      type: http
+
+  applicationConnectors:
+    -
+      port: 8080
+      type: http
+
+  rootPath: '/api/*'
