@@ -2,7 +2,7 @@ database:
    driverClass: com.mysql.jdbc.Driver
    user: root
    password:
-   url: jdbc:mysql://localhost:3306/careem?autoReconnect=true
+   url: jdbc:mysql://192.173.6.43:3306/careem?autoReconnect=true
    properties:
      hibernate.dialect: org.hibernate.dialect.MySQLDialect
      c3p0.acquireIncrement: 5
@@ -12,7 +12,6 @@ database:
      c3p0.maxIdleTime: 300
      c3p0.maxStatements: 500
      c3p0.idleConnectionTestPeriod: 30
-     
 
 logging:
   appenders:

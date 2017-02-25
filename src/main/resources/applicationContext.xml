@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config/>
-    <context:component-scan base-package="com.careem.hacathon*" />
+    <context:component-scan base-package="com.careem.hacathon.*" />
 
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -19,17 +19,14 @@
         </property>
     </bean>
 
-    <bean id="quotationService" class="com.careem.hacathon.biz.service.QuotationService">
-    </bean>
-
-    <bean id="producer" class="com.careem.hacathon.biz.kafka.Producer">
+  <!--   <bean id="producer" class="com.careem.hacathon.biz.kafka.Producer">
         <constructor-arg ref="producerPropertyBean"></constructor-arg>
     </bean>
-
+ -->
     <bean id="producerPropertyBean" class="com.careem.hacathon.biz.kafka.PropertyBean">
         <property name="props">
             <props>
-                <prop key="bootstrap.servers">localhost:9092</prop>
+                <prop key="bootstrap.servers">http://192.173.6.43:9092</prop>
                 <prop key="key.serializer">org.apache.kafka.common.serialization.StringSerializer</prop>
                 <prop key="value.serializer">org.apache.kafka.common.serialization.StringSerializer</prop>
             </props>
@@ -41,15 +38,14 @@
         </property>
     </bean>
 
-    <bean id="consumer" class="com.careem.hacathon.biz.kafka.Consumer">
+    <!-- <bean id="consumer" class="com.careem.hacathon.biz.kafka.Consumer">
         <constructor-arg ref="consumerPropertyBean"></constructor-arg>
-        <constructor-arg ref="quotationService"></constructor-arg>
-    </bean>
+    </bean> -->
 
     <bean id="consumerPropertyBean" class="com.careem.hacathon.biz.kafka.PropertyBean">
         <property name="props">
             <props>
-                <prop key="bootstrap.servers">localhost:9092</prop>
+                <prop key="bootstrap.servers">http://localhost:9092</prop>
                 <prop key="key.deserializer">org.apache.kafka.common.serialization.StringDeserializer</prop>
                 <prop key="value.deserializer">org.apache.kafka.common.serialization.StringDeserializer</prop>
                 <prop key="group.id">careem</prop>
@@ -63,9 +59,9 @@
     </bean>
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtpout.secureserver.net" />
-		<property name="username" value="XXXX" />
-		<property name="password" value="XXXX" />
+		<property name="host" value="smtp.office365.com" />
+		<property name="username" value="ranjan.kumar@zapcg.com" />
+		<property name="password" value="Buju1031123" />
 		<property name="javaMailProperties">
 
 			<props>

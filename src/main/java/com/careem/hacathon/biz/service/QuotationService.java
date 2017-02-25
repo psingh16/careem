@@ -1,55 +1,45 @@
 package com.careem.hacathon.biz.service;
 
-import com.careem.hacathon.dao.GenericDatabaseService;
 import com.careem.hacathon.dao.model.Booking;
-import com.careem.hacathon.dao.model.Price;
+import com.careem.hacathon.dao.repository.BookingJpaRepository;
+import com.careem.hacathon.pojos.BookingState;
 import com.careem.hacathon.pojos.GetQuotationRequestDTO;
-import com.careem.hacathon.pojos.GoodsCategory;
-import com.careem.hacathon.pojos.GoodsType;
-import com.google.common.collect.Maps;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
-import java.util.Map;
+import org.springframework.stereotype.Service;
 
 /**
- * Created by kumari.singh on 25/02/17.
+ * Created by kumari.singh on 26/02/17.
  */
-@Slf4j
+@Service
 public class QuotationService {
 
     @Autowired
-    private GenericDatabaseService genericDatabaseService;
+    private BookingJpaRepository bookingJpaRepository;
+
+    @Autowired
+    private PriceCalculatorService priceCalculatorService;
 
     @Autowired
     private EmailSender emailSender;
 
     public void updateBooking(GetQuotationRequestDTO getQuotationRequestDTO) {
         //find price
-        GoodsCategory goodsCategory = GoodsCategory.valueOf(getQuotationRequestDTO.getGoodsCategory());
-        GoodsType goodsType = GoodsType.valueOf(getQuotationRequestDTO.getGoodsType());
-        Map<String, Object> param = Maps.newHashMap();
-        param.put("goodsType", goodsType);
-        param.put("goodsCategory", goodsCategory);
-        List<Price> prices = genericDatabaseService.findUsingQuery("Price.findByGoodsTypeAndGoodsCategory", param);
-
-        Price price = prices.get(0);
+        double price = priceCalculatorService.getPrice(getQuotationRequestDTO);
 
         Booking booking = new Booking();
         booking.setBusinessId(getQuotationRequestDTO.getBusinessId());
-        booking.setCurrentState("created");
-        booking.setGoodsCategory(GoodsCategory.valueOf(getQuotationRequestDTO.getGoodsCategory()));
-        booking.setGoodsType(GoodsType.valueOf(getQuotationRequestDTO.getGoodsType()));
-        booking.setEmailId(getQuotationRequestDTO.getEmailId());
-        booking.setPrice(price.getPrice());
+        booking.setCurrentState(BookingState.CREATED.name());
+        booking.setGoodsCategory(getQuotationRequestDTO.getGoodsCategory());
+        booking.setGoodsType(getQuotationRequestDTO.getGoodsType());
+        booking.setPrice(price);
         booking.setEmailId(getQuotationRequestDTO.getEmailId());
         booking.setTotalUnits(getQuotationRequestDTO.getNoOfUnits());
         booking.setSource(getQuotationRequestDTO.getFromAddress().getCity());
         booking.setDestination(getQuotationRequestDTO.getToAddress().getCity());
-        genericDatabaseService.create(booking);
+        booking.setQuotationId(getQuotationRequestDTO.getQuotationId());
+        bookingJpaRepository.saveAndFlush(booking);
 
-        emailSender.sendMailRequestQuote("team@careem.com", booking.getEmailId(), "Regarding Quotation: "+booking.getQuotationId(),
+        emailSender.sendMailRequestQuote("ranjan.kumar@zapcg.com", booking.getEmailId(), "Regarding Quotation: "+booking.getQuotationId(),
                 "Your quotation for goods is Rs. "+booking.getPrice());
     }
 }
