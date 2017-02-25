@@ -42,7 +42,7 @@ public class DispatcherService {
         // TODO Auto-generated method stub
         for (Booking booking : items) {
             emailSender.sendMailRequestQuote("ranjan.kumar@zapcg.com", booking.getEmailId(), "CAREEM::Item dispatched", "Your Item with Booking Id :" +
-                    booking.getId() + "has been dispatched");
+                    booking.getId() + " has been dispatched");
         }
     }
 

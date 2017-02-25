@@ -34,7 +34,7 @@ public class QuotationResource {
 		String json = new Gson().toJson(data);
 		producer.write(quotationId, json);
 		return ResponseEntity.ok("Your request is accepted. We will get back to you shortly. Please use quotation Id: "
-				+ quotationId + "for future reference");
+				+ quotationId + " for future reference");
 
 	}
 
