@@ -29,9 +29,10 @@ public class RoutingAlgorithm {
 		return "A C B";
 		
 	}
-	private void fetchRoutes(String source2, String destination2) {
+	private String fetchRoutes(String source2, String destination2) {
 		// TODO Auto-generated method stub
 		//make a DB call 
+		return null;
 	}
 	public String shortestRoute()
 	{
