@@ -1,6 +1,7 @@
 package com.careem.hacathon.bootstrap;
 
 import com.careem.hacathon.biz.kafka.Consumer;
+import com.careem.hacathon.biz.kafka.Producer;
 import com.careem.hacathon.dao.GenericAbstractDAO;
 import com.careem.hacathon.dao.Price;
 import com.careem.hacathon.resource.QuotationResource;
@@ -60,6 +61,7 @@ public class Main extends Application<AppConfiguration> {
             }
         });
         bootstrap.addBundle(hibernateBundle);
+        startKafkaConsumer();
 
     }
 
@@ -68,15 +70,15 @@ public class Main extends Application<AppConfiguration> {
         GenericAbstractDAO<Price> priceGenericAbstractDAO =
                 new GenericAbstractDAO<Price>(hibernateBundle.getSessionFactory(), "Price");
 
-        environment.jersey().register(new QuotationResource());
+        environment.jersey().register(new QuotationResource(context.getBean(Producer.class)));
 
     }
 
     private void startKafkaConsumer() {
-        final ExecutorService executor = Executors.newFixedThreadPool(1);
+        final ExecutorService executor = Executors.newFixedThreadPool(2);
 
         final List<Consumer> consumers = new ArrayList<Consumer>();
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 2; i++) {
             Consumer consumer = context.getBean(Consumer.class);
             consumers.add(consumer);
             executor.submit(consumer);

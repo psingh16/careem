@@ -2,7 +2,7 @@ database:
    driverClass: com.mysql.jdbc.Driver
    user: root
    password:
-   url: jdbc:mysql://localhost:3306/dpe?autoReconnect=true
+   url: jdbc:mysql://192.173.6.43:3306/careem?autoReconnect=true
    properties:
      hibernate.dialect: org.hibernate.dialect.MySQLDialect
      c3p0.acquireIncrement: 5
@@ -44,16 +44,3 @@ server:
       type: http
 
   rootPath: '/api/*'
-
-kafkaConfig:
-  topic: "careem-topic"
-  server: "localhost:9092"
-
-  producer:
-    keySerializer: "org.apache.kafka.common.serialization.StringSerializer"
-    valueSerializer: "org.apache.kafka.common.serialization.StringSerializer"
-
-  consumer:
-    groupId: "bpp-consumer-group"
-    keyDeserializer: "org.apache.kafka.common.serialization.StringDeserializer"
-    valueDeserializer: "org.apache.kafka.common.serialization.StringDeserializer"

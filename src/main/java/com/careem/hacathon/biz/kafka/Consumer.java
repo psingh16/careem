@@ -1,5 +1,6 @@
 package com.careem.hacathon.biz.kafka;
 
+import com.careem.hacathon.pojos.GetQuotationRequestDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -7,7 +8,6 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
@@ -37,15 +37,14 @@ public class Consumer implements Callable<Object> {
     }
 
     public Object call() throws Exception {
-
-        Map<String, Object> paramsMap;
         consumer.subscribe(consumerPropertyBean.getTopics());
 
         while (true) {
             try {
                 ConsumerRecords<String, String> records = consumer.poll(1000);
                 for (ConsumerRecord<String, String> record : records) {
-                    paramsMap = (Map<String, Object>) new Gson().fromJson(record.value(), Map.class);
+                    GetQuotationRequestDTO getQuotationRequestDTO = new Gson().fromJson(record.value(), GetQuotationRequestDTO.class);
+                    System.out.print("priyanka "+getQuotationRequestDTO.getBusinessId());
 
                     }
             } catch (Exception e) {
