@@ -37,6 +37,7 @@ public class QuotationService {
         booking.setSource(getQuotationRequestDTO.getFromAddress().getCity());
         booking.setDestination(getQuotationRequestDTO.getToAddress().getCity());
         booking.setQuotationId(getQuotationRequestDTO.getQuotationId());
+        booking.setTypeOfDelivery(getQuotationRequestDTO.getDeliveryType());
         bookingJpaRepository.saveAndFlush(booking);
 
         emailSender.sendMailRequestQuote("ranjan.kumar@zapcg.com", booking.getEmailId(), "Regarding Quotation: "+booking.getQuotationId(),

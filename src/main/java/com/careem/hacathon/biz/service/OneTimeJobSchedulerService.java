@@ -4,6 +4,7 @@ import com.careem.hacathon.dao.model.Booking;
 import com.careem.hacathon.dao.model.Warehouse;
 import com.careem.hacathon.dao.repository.BookingJpaRepository;
 import com.careem.hacathon.dao.repository.WareHouseRepository;
+import com.careem.hacathon.pojos.DeliveryType;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,7 +16,7 @@ import java.util.List;
  * Created by kumari.singh on 26/02/17.
  */
 @Service
-public class JobSchedulerService {
+public class OneTimeJobSchedulerService {
 
     @Autowired
     private DispatcherService dispatcherService;
@@ -29,7 +30,7 @@ public class JobSchedulerService {
     //@Scheduled(cron = "0 0 12 * * ?")
     @Scheduled(fixedDelay = 5 * 60 * 1000, initialDelay = 1 * 60 * 1000)
     public void onSchedule() {
-        List<Warehouse> warehouses = wareHouseRepository.findActiveGoods();
+        List<Warehouse> warehouses = wareHouseRepository.findByTypeOfDelivery(DeliveryType.normal.name());
         List<Booking> bookingList = Lists.newArrayList();
 
         for(Warehouse warehouse: warehouses) {

@@ -10,8 +10,8 @@ import java.util.List;
  * Created by kumari.singh on 26/02/17.
  */
 public interface WareHouseRepository extends JpaRepository<Warehouse, Integer> {
-    @Query("select m from Warehouse m where m.active=true")
-    List<Warehouse> findActiveGoods();
+    @Query("select m from Warehouse m where m.active=true and m.typeOfDelivery = ?1")
+    List<Warehouse> findByTypeOfDelivery(String typeOfDelivery);
 
     Warehouse findByBookingId(int bookingId);
 }

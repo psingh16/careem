@@ -31,6 +31,7 @@ public class BookingService {
 		Warehouse warehouse = new Warehouse();
 		warehouse.setBookingId(booking.getId());
 		warehouse.setLocation(booking.getSource());
+		warehouse.setTypeOfDelivery(booking.getTypeOfDelivery());
 		warehouse.setActive(true);
 		wareHouseRepository.saveAndFlush(warehouse);
 

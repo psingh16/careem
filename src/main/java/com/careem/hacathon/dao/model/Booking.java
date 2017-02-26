@@ -29,6 +29,9 @@ public class Booking {
     @Column(name = "GOODS_CATEGORY", nullable = false)
     private String goodsCategory;
 
+    @Column(name = "TYPE_OF_DELIVERY")
+    private String typeOfDelivery;
+
     @Column(name = "TOTAL_UNITS", nullable = false)
     private int totalUnits;
 

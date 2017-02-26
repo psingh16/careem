@@ -21,6 +21,9 @@ public class Warehouse {
     @Column(name = "BOOKING_ID")
     private Integer bookingId;
 
+    @Column(name = "TYPE_OF_DELIVERY")
+    private String typeOfDelivery;
+
     @Column(name = "ACTIVE")
     private boolean active;
 
